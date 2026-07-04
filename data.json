@@ -4,9 +4,9 @@
       "id": 1,
       "label": "Day 1",
       "color": "#d5ecf7",
-      "insight": "[Điền insight chính của Ngày 1 — vd: điều gì khiến bạn nhận ra sự khác biệt ngay từ lúc di chuyển]",
-      "learned": "[Bạn học được gì từ ngày khởi hành này]",
-      "futurePractice": "[Bạn sẽ áp dụng gì trong tương lai]",
+      "insight": "...",
+      "learned": "...",
+      "futurePractice": "...",
       "stops": [
         {
           "title": "Tân Sơn Nhất",
@@ -41,9 +41,9 @@
       "id": 2,
       "label": "Day 2",
       "color": "#5dc1de",
-      "insight": "[Điền insight chính của Ngày 2 — vd: điều gì bạn thấy về cách ngành nghề vận hành ở Singapore]",
-      "learned": "[Bạn học được gì từ các buổi làm việc và tham quan học thuật]",
-      "futurePractice": "[Bạn sẽ áp dụng gì trong tương lai]",
+      "insight": "...",
+      "learned": "...",
+      "futurePractice": "...",
       "stops": [
         {
           "title": "CPG Corporation",
@@ -105,9 +105,9 @@
       "id": 3,
       "label": "Day 3",
       "color": "#7be0ba",
-      "insight": "[Điền insight chính của Ngày 3 — vd: điều gì bạn thấy về quy hoạch đô thị và không gian xanh]",
-      "learned": "[Bạn học được gì từ URA, ArtScience, Gardens by the Bay]",
-      "futurePractice": "[Bạn sẽ áp dụng gì trong tương lai]",
+      "insight": "...",
+      "learned": "...",
+      "futurePractice": "...",
       "stops": [
         {
           "title": "URA City Gallery",
