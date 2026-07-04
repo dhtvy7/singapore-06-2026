@@ -41,6 +41,7 @@ body{
 
 .day-btn{
   padding:14px 28px;
+
   border:none;
   border-radius:800px;
 
@@ -95,10 +96,26 @@ body{
     0 20px 60px rgba(0,0,0,.45),
     inset 0 1px 0 rgba(255,255,255,.08);
 
-  /* hiệu ứng fade */
-  transition:
-    opacity .25s ease,
-    transform .25s ease;
+  transition:opacity .25s ease;
+
+  /* fade phần trên khi scroll */
+  --fade-top: 0px;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      black var(--fade-top),
+      black 100%
+    );
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      black var(--fade-top),
+      black 100%
+    );
 }
 
 #content::-webkit-scrollbar{
@@ -214,8 +231,8 @@ body{
     right:12px;
     left:auto;
 
-    width:350px;
-    max-width:350px;
+    width:360px;
+    max-width:360px;
 
     max-height:20vh;
     overflow-y:auto;
@@ -224,6 +241,4 @@ body{
     border-radius:20px;
   }
 
-#content{
-  transition: opacity .10s linear;
 }
