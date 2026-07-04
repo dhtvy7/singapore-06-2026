@@ -1,303 +1,266 @@
 @font-face {
   font-family: "Glacial Indifference";
   src: url("glacial-indifference.regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
 }
 
 @font-face {
   font-family: "Glacial Indifference";
   src: url("glacial-indifference.bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
+  font-weight:700;
 }
 
 html,
 body{
   margin:0;
   width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family: "Glacial Indifference";
+  min-height:100%;
+  font-family:"Glacial Indifference";
+  overflow-x:hidden;
+  color:white;
+  scroll-behavior:smooth;
+}
+
+body{
+  scroll-snap-type:y mandatory;
 }
 
 #map{
+  position:fixed;
+  inset:0;
   width:100%;
-  height:100vh;
+  height:100%;
 }
 
-/* ---------- DAY BUTTONS ---------- */
+/* ========================= */
 
 .day-buttons{
-  position:absolute;
+  position:fixed;
   top:24px;
-  left:24px;
-  z-index:1000;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5000;
 
   display:flex;
-  gap:14px;
-  flex-wrap:wrap;
+  gap:12px;
 }
 
 .day-btn{
-  padding:14px 28px;
+  padding:12px 22px;
 
-  border-radius:800px;
-  background:rgba(255,255,255,.10);
+  border:none;
+  border-radius:999px;
+
+  background:rgba(255,255,255,.12);
+  color:white;
 
   backdrop-filter:blur(30px);
   -webkit-backdrop-filter:blur(30px);
 
-  border:2px solid rgba(255,255,255,.10);
-
-  color:white;
-  font-size:12px;
-  font-weight:600;
   letter-spacing:2px;
-
   cursor:pointer;
   transition:.3s;
 }
 
-.day-btn:hover{
-  background:rgba(255,255,255,.18);
-}
-
 .day-btn.active{
   background:rgba(255,255,255,.28);
-  border-color:rgba(255,255,255,.4);
 }
 
-/* ---------- STORY PANEL ---------- */
+/* ========================= */
 
 #content{
-  position:absolute;
+  position:relative;
   z-index:1000;
+}
 
-  top:100px;
-  bottom:24px;
-  right:40px;
+/* ========================= */
 
-  width:420px;
-  max-width:calc(100vw - 80px);
+.hero{
+  height:100vh;
+  min-height:100vh;
 
-  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 
-  padding:28px;
+  text-align:center;
+
+  scroll-snap-align:start;
+}
+
+.hero h1{
+  margin:0;
+  font-size:clamp(2.2rem,6vw,4.5rem);
+  line-height:1;
+}
+
+.subtitle{
+  margin-top:16px;
+  color:rgba(255,255,255,.75);
+  font-size:1.1rem;
+}
+
+/* ========================= */
+
+.day-block{
+  height:100vh;
+  min-height:100vh;
+
   box-sizing:border-box;
 
-  border-radius:20px;
+  padding:
+    max(110px, env(safe-area-inset-top))
+    40px
+    50px;
 
-  background:rgba(12,12,12,.25);
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+
+  scroll-snap-align:start;
+
+  opacity:.2;
+  transform:translateY(80px);
+
+  transition:
+    opacity .8s ease,
+    transform .8s ease;
+}
+
+.day-block.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.day-inner{
+  width:min(500px,90vw);
+
+  padding:30px;
+
+  border-radius:24px;
+
+  background:rgba(12,12,12,.35);
 
   backdrop-filter:blur(30px);
   -webkit-backdrop-filter:blur(30px);
 
-  border:1px solid rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.12);
 
   box-shadow:
-    0 20px 60px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.08);
-
-  --fade-top: 0px;
-
-  -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0, black var(--fade-top), black 100%);
-  mask-image:
-    linear-gradient(to bottom, transparent 0, black var(--fade-top), black 100%);
+    0 20px 60px rgba(0,0,0,.45);
 }
 
-#content::-webkit-scrollbar{ width:6px; }
-#content::-webkit-scrollbar-thumb{
-  background:rgba(255,255,255,.2);
-  border-radius:20px;
-}
-
-/* ---------- HEADER ---------- */
-
-#content h1{
-  font-size:2rem;
-  line-height:0.95;
-  margin-bottom:10px;
-  color:white;
-}
-
-.subtitle{
-  font-size:1rem;
-  color:rgba(255,255,255,.7);
-  margin-bottom:40px;
-}
-
-/* ---------- DAY BLOCK ---------- */
-
-.day-block{
-  margin-bottom:56px;
-  padding-top:24px;
-  border-top:1px solid rgba(255,255,255,.12);
-}
-
-.day-block:first-of-type{
-  border-top:none;
-  padding-top:0;
-}
-
-.day-header{
-  margin-bottom:14px;
-}
+/* ========================= */
 
 .day-tag{
   display:inline-block;
   padding:6px 16px;
-  border-radius:800px;
+  border-radius:999px;
+
   background:var(--day-color);
-  color:#0c0c0c;
-  font-size:11px;
+  color:#111;
+
+  font-size:12px;
   font-weight:700;
   letter-spacing:2px;
 }
 
 .day-insight{
+  margin:22px 0;
+  line-height:1.7;
   color:rgba(255,255,255,.9);
   font-style:italic;
-  line-height:1.6;
-  margin-bottom:24px;
 }
-
-/* ---------- STOPS ---------- */
 
 .stops{
   display:flex;
   flex-direction:column;
   gap:18px;
-  margin-bottom:20px;
 }
 
 .stop-block{
   display:flex;
   gap:14px;
-  align-items:flex-start;
-  padding:10px;
-  border-radius:14px;
-  transition:background .3s ease;
 }
 
 .stop-marker{
-  flex:0 0 auto;
   width:34px;
   height:34px;
+  flex-shrink:0;
+
   border-radius:50%;
-  background:rgba(255,255,255,.08);
-  border:1.5px solid var(--dot-color);
+  border:1px solid var(--dot-color);
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:15px;
 }
 
 .stop-title{
-  color:white;
+  margin:0;
   font-size:1rem;
-  margin:0 0 4px 0;
 }
 
 .stop-caption{
+  margin:4px 0 0;
   color:rgba(255,255,255,.65);
-  font-size:.85rem;
-  margin:0;
-  line-height:1.5;
 }
 
 .stop-body img{
   width:100%;
-  max-height:160px;
-  object-fit:cover;
   border-radius:14px;
-  margin-top:10px;
+  margin-top:12px;
 }
 
-/* ---------- DAY RECAP ---------- */
-
 .day-recap{
-  margin-top:8px;
-  padding:18px;
+  margin-top:28px;
+  padding:20px;
+
   border-radius:16px;
+
   background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
 }
 
 .day-recap h3{
   color:#60aedb;
-  font-size:.85rem;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  margin:14px 0 8px 0;
+  letter-spacing:2px;
 }
-
-.day-recap h3:first-child{ margin-top:0; }
 
 .day-recap p{
-  color:rgba(255,255,255,.82);
   line-height:1.7;
-  margin:0;
+  color:rgba(255,255,255,.82);
 }
 
-/* ---------- MAP DOT ---------- */
-/* Stops are now rendered as native MapLibre circle layers (see script.js),
-   not DOM elements, so they stay perfectly synced with the map during
-   pan/zoom. No CSS needed here anymore. */
+/* ========================= */
 
-.dot.active{
-  transform:scale(1.8);
-  box-shadow:
-    0 0 14px var(--dot-color, white),
-    0 0 30px var(--dot-color, white);
-}
-
-/* ---------- TABLET ---------- */
-
-@media (max-width:1000px){
-  #content{
-    width:360px;
-    right:24px;
-    top:100px;
-  }
-}
-
-/* ---------- MOBILE ---------- */
-
-@media (max-width:500px){
+@media (max-width:768px){
 
   .day-buttons{
-    top:20px;
-    left:50%;
-    transform:translateX(-50%);
     width:90%;
-    display:flex;
-    flex-wrap:nowrap;
-    justify-content:center;
     gap:8px;
   }
 
   .day-btn{
-    padding:10px 14px;
-    font-size:12px;
-    letter-spacing:2px;
-    white-space:nowrap;
+    flex:1;
+    padding:10px;
+    font-size:11px;
   }
 
-  #content{
-    top:auto;
-    bottom:20px;
-    right:12px;
-    left:12px;
+  .hero{
+    padding:0 24px;
+  }
 
-    width:auto;
-    max-width:none;
+  .day-block{
+    justify-content:center;
+    padding:
+      max(100px, env(safe-area-inset-top))
+      16px
+      30px;
+  }
 
-    max-height:45vh;
-
-    padding:16px;
-    border-radius:20px;
+  .day-inner{
+    width:100%;
+    padding:20px;
   }
 
 }
