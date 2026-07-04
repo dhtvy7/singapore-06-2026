@@ -1,83 +1,103 @@
 const map = new maplibregl.Map({
-container:'map',
-
-style:
-'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-
-center:[103.8,1.35],
-zoom:4
+  container: 'map',
+  style:
+    'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+  center: [103.8, 1.35],
+  zoom: 4
 });
 
 fetch('data.json')
-.then(response=>response.json())
-.then(data=>{
+  .then(response => response.json())
+  .then(data => {
 
-const coordinates=[];
+    const coordinates = [];
 
-data.forEach(p=>{
+    const timeline =
+      document.getElementById('timeline');
 
-coordinates.push([p.lon,p.lat]);
+    data.forEach(p => {
 
-const el=document.createElement('div');
-el.className='marker';
+      coordinates.push([p.lon, p.lat]);
 
-new maplibregl.Marker(el)
-.setLngLat([p.lon,p.lat])
-.addTo(map);
+      timeline.innerHTML += `
+        <div class="stop" onclick="goToStop(${p.id})">
+          <h3>${p.day}</h3>
+          <p>${p.title}</p>
+        </div>
+      `;
 
-el.addEventListener('click',()=>{
+      const el =
+        document.createElement('div');
 
-document.getElementById('content').innerHTML=`
+      el.className = 'marker';
 
-<h2>${p.title}</h2>
+      el.addEventListener('click', () => {
+        showContent(p);
+      });
 
-<p><b>${p.day}</b></p>
+      new maplibregl.Marker({
+        element: el
+      })
+        .setLngLat([p.lon, p.lat])
+        .addTo(map);
 
-<img src="${p.image}">
+    });
 
-<h3>👀 What I Saw</h3>
-<p>${p.whatISaw}</p>
+    window.goToStop = function(id) {
 
-<h3>💡 What I Learned</h3>
-<p>${p.whatILearned}</p>
+      const p =
+        data.find(d => d.id === id);
 
-<h3>🚀 Future Practice</h3>
-<p>${p.futurePractice}</p>
+      showContent(p);
 
-`;
+    }
 
-map.flyTo({
-center:[p.lon,p.lat],
-zoom:12
-});
+    function showContent(p){
 
-});
+      document.getElementById('content').innerHTML = `
+        <img src="${p.image}">
+        <h2>${p.title}</h2>
 
-});
+        <p><strong>${p.day}</strong></p>
 
-map.on('load',()=>{
+        <h3>What I Saw</h3>
+        <p>${p.description}</p>
 
-map.addSource('journey',{
-type:'geojson',
-data:{
-type:'Feature',
-geometry:{
-type:'LineString',
-coordinates:coordinates
-}
-}
-});
+        <h3>Key Lesson</h3>
+        <p>${p.lesson}</p>
+      `;
 
-map.addLayer({
-id:'journey',
-type:'line',
-source:'journey',
-paint:{
-'line-color':'#f7c948',
-'line-width':4
-}
-});
+      map.flyTo({
+        center:[p.lon,p.lat],
+        zoom:12,
+        speed:0.8
+      });
 
-});
+    }
 
-});
+    map.on('load', () => {
+
+      map.addSource('journey', {
+        type:'geojson',
+        data:{
+          type:'Feature',
+          geometry:{
+            type:'LineString',
+            coordinates:coordinates
+          }
+        }
+      });
+
+      map.addLayer({
+        id:'journey',
+        type:'line',
+        source:'journey',
+        paint:{
+          'line-color':'#f7c948',
+          'line-width':4
+        }
+      });
+
+    });
+
+  });
