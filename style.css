@@ -1,37 +1,76 @@
 html,
 body{
-margin:0;
-height:100%;
-font-family:Arial,sans-serif;
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family:Arial, sans-serif;
 }
 
 body{
-display:flex;
+  display:flex;
 }
 
 #sidebar{
-width:420px;
-padding:30px;
-background:white;
-overflow:auto;
-box-shadow:0 0 20px rgba(0,0,0,.2);
-z-index:2;
+  width:420px;
+  background:white;
+  overflow:auto;
+  padding:35px;
+  box-sizing:border-box;
 }
 
 #map{
-flex:1;
+  flex:1;
 }
 
-img{
-width:100%;
-border-radius:12px;
+h1{
+  font-size:52px;
+  margin-bottom:10px;
+}
+
+h2{
+  font-size:24px;
+  font-weight:400;
+  margin-bottom:40px;
+}
+
+.stop{
+  padding:18px;
+  border-radius:15px;
+  background:#f5f5f5;
+  margin-bottom:15px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.stop:hover{
+  background:#ececec;
+}
+
+.stop h3{
+  margin:0;
+}
+
+.stop p{
+  margin:8px 0 0 0;
+}
+
+#content{
+  margin-top:40px;
+}
+
+#content img{
+  width:100%;
+  border-radius:15px;
+  margin-bottom:20px;
 }
 
 .marker{
-width:16px;
-height:16px;
-background:#f7c948;
-border-radius:50%;
-border:3px solid white;
-cursor:pointer;
+  width:20px;
+  height:20px;
+  background:#f7c948;
+  border-radius:50%;
+  border:3px solid white;
+  box-shadow:0 0 15px rgba(247,201,72,.7);
+  cursor:pointer;
 }
