@@ -11,13 +11,16 @@ fetch('data.json')
   .then(res => res.json())
   .then(({ days }) => {
 
-    const markers = []; // { el, marker, dayId, index }
+    const stopMeta = []; // { id, dayId, index }
 
     /* ==========================
-       BUILD MARKERS + ROUTE LINES
+       BUILD STOPS AS GL LAYERS + ROUTE LINES
        ========================== */
 
     map.on('load', () => {
+
+      const features = [];
+      let uid = 0;
 
       days.forEach(day => {
 
@@ -45,21 +48,48 @@ fetch('data.json')
 
         day.stops.forEach((stop, index) => {
 
-          const el = document.createElement('div');
-          el.className = 'dot-wrap';
+          features.push({
+            type: 'Feature',
+            id: uid,
+            properties: { dayId: day.id, index, color: day.color },
+            geometry: { type: 'Point', coordinates: [stop.lon, stop.lat] }
+          });
 
-          const inner = document.createElement('div');
-          inner.className = 'dot';
-          inner.style.setProperty('--dot-color', day.color);
-          el.appendChild(inner);
+          stopMeta.push({ id: uid, dayId: day.id, index });
+          uid++;
 
-          const marker = new maplibregl.Marker({ element: el })
-            .setLngLat([stop.lon, stop.lat])
-            .addTo(map);
-
-          markers.push({ el: inner, dayId: day.id, index });
         });
 
+      });
+
+      map.addSource('stops', {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features }
+      });
+
+      map.addLayer({
+        id: 'stops-glow',
+        type: 'circle',
+        source: 'stops',
+        paint: {
+          'circle-radius': ['case', ['boolean', ['feature-state', 'active'], false], 20, 0],
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.25,
+          'circle-blur': 1
+        }
+      });
+
+      map.addLayer({
+        id: 'stops-dot',
+        type: 'circle',
+        source: 'stops',
+        paint: {
+          'circle-radius': ['case', ['boolean', ['feature-state', 'active'], false], 7, 5],
+          'circle-color': ['get', 'color'],
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': '#ffffff',
+          'circle-stroke-opacity': ['case', ['boolean', ['feature-state', 'active'], false], 1, 0.5]
+        }
       });
 
     });
@@ -147,8 +177,11 @@ fetch('data.json')
       if (dayId === activeDay) return;
       activeDay = dayId;
 
-      markers.forEach(m => {
-        m.el.classList.toggle('active', m.dayId === dayId);
+      stopMeta.forEach(m => {
+        map.setFeatureState(
+          { source: 'stops', id: m.id },
+          { active: m.dayId === dayId }
+        );
       });
 
       document.querySelectorAll('.day-btn').forEach(btn => {
