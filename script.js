@@ -1,33 +1,38 @@
 const map = new maplibregl.Map({
-  container: 'map',
-  style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+  container: "map",
+  style:
+    "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
   center: [103.8, 1.3],
   zoom: 10.5
 });
 
-const content = document.getElementById('content');
+const content = document.getElementById("content");
 
-fetch('data.json')
-  .then(res => res.json())
+fetch("data.json")
+  .then((res) => res.json())
   .then(({ days }) => {
-
     const stopMeta = [];
 
-    map.on('load', () => {
+    /* ==========================
+       MAP
+    ========================== */
 
+    map.on("load", () => {
       const features = [];
       let uid = 0;
 
-      days.forEach(day => {
-
-        const coords = day.stops.map(s => [s.lon, s.lat]);
+      days.forEach((day) => {
+        const coords = day.stops.map((s) => [
+          s.lon,
+          s.lat
+        ]);
 
         map.addSource(`route-${day.id}`, {
-          type: 'geojson',
+          type: "geojson",
           data: {
-            type: 'Feature',
+            type: "Feature",
             geometry: {
-              type: 'LineString',
+              type: "LineString",
               coordinates: coords
             }
           }
@@ -35,20 +40,19 @@ fetch('data.json')
 
         map.addLayer({
           id: `route-${day.id}`,
-          type: 'line',
+          type: "line",
           source: `route-${day.id}`,
           paint: {
-            'line-color': day.color,
-            'line-width': 2,
-            'line-opacity': 0.55,
-            'line-dasharray': [1, 1.6]
+            "line-color": day.color,
+            "line-width": 2,
+            "line-opacity": 0.55,
+            "line-dasharray": [1, 1.6]
           }
         });
 
         day.stops.forEach((stop, index) => {
-
           features.push({
-            type: 'Feature',
+            type: "Feature",
             id: uid,
             properties: {
               dayId: day.id,
@@ -56,8 +60,11 @@ fetch('data.json')
               color: day.color
             },
             geometry: {
-              type: 'Point',
-              coordinates: [stop.lon, stop.lat]
+              type: "Point",
+              coordinates: [
+                stop.lon,
+                stop.lat
+              ]
             }
           });
 
@@ -71,59 +78,70 @@ fetch('data.json')
         });
       });
 
-      map.addSource('stops', {
-        type: 'geojson',
+      map.addSource("stops", {
+        type: "geojson",
         data: {
-          type: 'FeatureCollection',
+          type: "FeatureCollection",
           features
         }
       });
 
       map.addLayer({
-        id: 'stops-glow',
-        type: 'circle',
-        source: 'stops',
+        id: "stops-glow",
+        type: "circle",
+        source: "stops",
         paint: {
-          'circle-radius': [
-            'case',
-            ['boolean', ['feature-state', 'active'], false],
+          "circle-radius": [
+            "case",
+            [
+              "boolean",
+              ["feature-state", "active"],
+              false
+            ],
             20,
             0
           ],
-          'circle-color': ['get', 'color'],
-          'circle-opacity': 0.25,
-          'circle-blur': 1
+          "circle-color": ["get", "color"],
+          "circle-opacity": 0.25,
+          "circle-blur": 1
         }
       });
 
       map.addLayer({
-        id: 'stops-dot',
-        type: 'circle',
-        source: 'stops',
+        id: "stops-dot",
+        type: "circle",
+        source: "stops",
         paint: {
-          'circle-radius': [
-            'case',
-            ['boolean', ['feature-state', 'active'], false],
+          "circle-radius": [
+            "case",
+            [
+              "boolean",
+              ["feature-state", "active"],
+              false
+            ],
             7,
             5
           ],
-          'circle-color': ['get', 'color'],
-          'circle-stroke-width': 1.5,
-          'circle-stroke-color': '#ffffff',
-          'circle-stroke-opacity': [
-            'case',
-            ['boolean', ['feature-state', 'active'], false],
+          "circle-color": ["get", "color"],
+          "circle-stroke-width": 1.5,
+          "circle-stroke-color": "#ffffff",
+          "circle-stroke-opacity": [
+            "case",
+            [
+              "boolean",
+              ["feature-state", "active"],
+              false
+            ],
             1,
             0.5
           ]
         }
       });
-
     });
 
     /* ==========================
        BUILD HTML
-       ========================== */
+    ========================== */
 
     let html = `
       <section class="hero">
@@ -134,19 +152,19 @@ fetch('data.json')
       </section>
     `;
 
-    days.forEach(day => {
-
+    days.forEach((day) => {
       html += `
         <section
           class="day-block"
           data-day="${day.id}"
           style="--day-color:${day.color}"
         >
-
           <div class="day-inner">
 
             <div class="day-header">
-              <span class="day-tag">${day.label}</span>
+              <span class="day-tag">
+                ${day.label}
+              </span>
             </div>
 
             <p class="day-insight">
@@ -157,7 +175,6 @@ fetch('data.json')
       `;
 
       day.stops.forEach((stop, index) => {
-
         html += `
           <div
             class="stop-block"
@@ -168,25 +185,33 @@ fetch('data.json')
               class="stop-marker"
               style="--dot-color:${day.color}"
             >
-              ${stop.icon || ''}
+              ${stop.icon || ""}
             </div>
 
             <div class="stop-body">
+
               <h3 class="stop-title">
                 ${stop.title}
               </h3>
 
               ${
                 stop.caption
-                  ? `<p class="stop-caption">${stop.caption}</p>`
-                  : ''
+                  ? `
+                  <p class="stop-caption">
+                    ${stop.caption}
+                  </p>
+                `
+                  : ""
               }
 
               ${
                 stop.image
-                  ? `<img src="${stop.image}">`
-                  : ''
+                  ? `
+                  <img src="${stop.image}">
+                `
+                  : ""
               }
+
             </div>
           </div>
         `;
@@ -204,7 +229,6 @@ fetch('data.json')
             </div>
 
           </div>
-
         </section>
       `;
     });
@@ -213,29 +237,36 @@ fetch('data.json')
 
     /* ==========================
        ACTIVE DAY
-       ========================== */
+    ========================== */
 
     let activeDay = null;
     let flyTimer = null;
 
     function fitDay(dayId) {
+      const day = days.find(
+        (d) => d.id === dayId
+      );
 
-      const day = days.find(d => d.id === dayId);
       if (!day) return;
 
-      const bounds = new maplibregl.LngLatBounds();
+      const bounds =
+        new maplibregl.LngLatBounds();
 
-      day.stops.forEach(stop => {
-        bounds.extend([stop.lon, stop.lat]);
+      day.stops.forEach((stop) => {
+        bounds.extend([
+          stop.lon,
+          stop.lat
+        ]);
       });
 
-      const isMobile = window.innerWidth < 768;
+      const isMobile =
+        window.innerWidth < 768;
 
       map.fitBounds(bounds, {
         padding: isMobile
           ? {
-              top: 100,
-              bottom: 100,
+              top: 80,
+              bottom: 80,
               left: 40,
               right: 40
             }
@@ -245,112 +276,134 @@ fetch('data.json')
               left: 80,
               right: 500
             },
-        duration: 1200,
+
+        duration: isMobile
+          ? 0
+          : 600,
+
         maxZoom: 14,
         essential: true
       });
     }
 
     function setActiveDay(dayId) {
-
-      if (activeDay === dayId) return;
+      if (dayId === activeDay) return;
 
       activeDay = dayId;
 
-      stopMeta.forEach(stop => {
+      stopMeta.forEach((m) => {
         map.setFeatureState(
           {
-            source: 'stops',
-            id: stop.id
+            source: "stops",
+            id: m.id
           },
           {
-            active: stop.dayId === dayId
+            active:
+              m.dayId === dayId
           }
         );
       });
 
       document
-        .querySelectorAll('.day-btn')
-        .forEach(btn => {
+        .querySelectorAll(".day-btn")
+        .forEach((btn) => {
           btn.classList.toggle(
-            'active',
-            Number(btn.dataset.id) === dayId
+            "active",
+            Number(btn.dataset.id) ===
+              dayId
           );
         });
 
-      clearTimeout(flyTimer);
-
-      flyTimer = setTimeout(() => {
-        fitDay(dayId);
-      }, 100);
+      fitDay(dayId);
     }
 
     /* ==========================
-       OBSERVE SECTIONS
-       ========================== */
+       OBSERVER
+    ========================== */
 
     const dayBlocks =
-      document.querySelectorAll('.day-block');
+      document.querySelectorAll(
+        ".day-block"
+      );
 
     const observer =
       new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
+        (entries) => {
+          entries.forEach(
+            (entry) => {
+              if (
+                !entry.isIntersecting
+              )
+                return;
 
-            if (!entry.isIntersecting) return;
+              const dayId =
+                Number(
+                  entry.target.dataset.day
+                );
 
-            const dayId =
-              Number(entry.target.dataset.day);
+              clearTimeout(
+                flyTimer
+              );
 
-            setActiveDay(dayId);
-          });
+              flyTimer =
+                setTimeout(() => {
+                  setActiveDay(
+                    dayId
+                  );
+                }, 180);
+            }
+          );
         },
         {
-          threshold: 0.6
+          threshold: 0.7
         }
       );
 
-    dayBlocks.forEach(block => {
-      observer.observe(block);
-    });
+    dayBlocks.forEach((block) =>
+      observer.observe(block)
+    );
 
     /* ==========================
-       FADE + SLIDE
-       ========================== */
+       FADE ANIMATION
+    ========================== */
 
     const panelObserver =
       new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            entry.target.classList.toggle(
-              'active',
-              entry.isIntersecting
-            );
-          });
+        (entries) => {
+          entries.forEach(
+            (entry) => {
+              entry.target.classList.toggle(
+                "active",
+                entry.isIntersecting
+              );
+            }
+          );
         },
         {
-          threshold: 0.55
+          threshold: 0.35
         }
       );
 
-    dayBlocks.forEach(block => {
-      panelObserver.observe(block);
-    });
+    dayBlocks.forEach((block) =>
+      panelObserver.observe(block)
+    );
 
     /* ==========================
-       BUTTON NAVIGATION
-       ========================== */
+       BUTTONS
+    ========================== */
 
     document
-      .querySelectorAll('.day-btn')
-      .forEach(btn => {
-
+      .querySelectorAll(
+        ".day-btn"
+      )
+      .forEach((btn) => {
         btn.addEventListener(
-          'click',
+          "click",
           () => {
-
             const dayId =
-              Number(btn.dataset.id);
+              Number(
+                btn.dataset.id
+              );
 
             const target =
               document.querySelector(
@@ -359,23 +412,21 @@ fetch('data.json')
 
             if (!target) return;
 
-            window.scrollTo({
-              top: target.offsetTop,
-              behavior: 'smooth'
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
             });
           }
         );
-
       });
 
     /* ==========================
        INIT
-       ========================== */
+    ========================== */
 
-    if (days.length) {
-      setTimeout(() => {
-        setActiveDay(days[0].id);
-      }, 500);
-    }
-
+    setTimeout(() => {
+      setActiveDay(
+        days[0].id
+      );
+    }, 300);
   });
