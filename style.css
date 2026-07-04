@@ -44,14 +44,14 @@ body{
 
 #content h1{
   font-size:64px;
-  font-weight:800;
+  font-weight:500;
   line-height:1;
   margin-bottom:20px;
 }
 
 #content h2{
   font-size:54px;
-  font-weight:800;
+  font-weight:500;
   line-height:1.05;
   margin-bottom:20px;
 }
