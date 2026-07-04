@@ -184,7 +184,7 @@ body{
 
 /* ---------- MOBILE ---------- */
 
-@media (max-width:400px){
+@media (max-width:300px){
 
   /* DAY BUTTONS */
   .day-buttons{
@@ -214,8 +214,8 @@ body{
     left:auto;
     transform:none;
 
-    width:400px;            /* box nhỏ */
-    max-width:400px;
+    width:300px;            /* box nhỏ */
+    max-width:300px;
 
     max-height:20vh;
     overflow-y:auto;
@@ -225,13 +225,13 @@ body{
   }
 
   #content h1{
-    font-size:0.95rem;
+    font-size:0.9rem;
     line-height:1.1;
     margin-bottom:12px;
   }
 
   .subtitle{
-    font-size:0.55rem;
+    font-size:0.6rem;
     margin-bottom:14px;
   }
 
@@ -255,13 +255,13 @@ body{
   }
 
   #content h3{
-    font-size:0.5rem;
+    font-size:0.6rem;
     letter-spacing:2px;
     margin-top:16px;
   }
 
   #content p{
-    font-size:0.4rem;
+    font-size:0.6rem;
     line-height:1.45;
   }
 }
