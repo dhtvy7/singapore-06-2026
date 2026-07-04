@@ -214,8 +214,8 @@ body{
     right:12px;
     left:auto;
 
-    width:300px;
-    max-width:300px;
+    width:350px;
+    max-width:350px;
 
     max-height:20vh;
     overflow-y:auto;
@@ -225,5 +225,5 @@ body{
   }
 
 #content{
-  transition: opacity .15s linear;
+  transition: opacity .10s linear;
 }
