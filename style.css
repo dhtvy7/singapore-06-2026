@@ -3,7 +3,8 @@ body{
   margin:0;
   width:100%;
   height:100%;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:auto;
 
   font-family:
     -apple-system,
@@ -66,8 +67,8 @@ body{
   top:110px;
   right:40px;
 
-  width:min(90vw,520px);
-  max-width:520px;
+  width:460px;
+  max-width:calc(100vw - 80px);
 
   max-height:calc(100vh - 150px);
   overflow-y:auto;
@@ -100,27 +101,30 @@ body{
 /* ---------- HEADER ---------- */
 
 #content h1{
-  font-size:clamp(2.2rem,4vw,4rem);
+  font-size:clamp(2rem,4vw,4rem);
   line-height:0.95;
   margin-bottom:20px;
   color:white;
 }
 
 .subtitle{
-  font-size:1.15rem;
+  font-size:1.1rem;
   color:rgba(255,255,255,.7);
-  margin-bottom:32px;
+  margin-bottom:28px;
 }
 
 #content img{
   width:100%;
+  max-height:240px;
+  object-fit:cover;
+
   display:block;
-  border-radius:28px;
-  margin-bottom:30px;
+  border-radius:24px;
+  margin-bottom:28px;
 }
 
 #content h2{
-  font-size:clamp(2rem,4vw,3.2rem);
+  font-size:clamp(1.8rem,4vw,3rem);
   line-height:1.05;
   color:white;
   margin-bottom:10px;
@@ -163,7 +167,8 @@ body{
 
   #content{
     right:20px;
-    width:min(90vw,480px);
+    width:420px;
+    max-width:calc(100vw - 40px);
   }
 
 }
@@ -173,7 +178,7 @@ body{
 @media (max-width:768px){
 
   .day-buttons{
-    top:18px;
+    top:20px;
     left:50%;
     transform:translateX(-50%);
     width:95%;
@@ -182,51 +187,40 @@ body{
   }
 
   .day-btn{
-    padding:12px 18px;
+    padding:12px 16px;
     font-size:13px;
     letter-spacing:1px;
   }
 
   #content{
-    top:90px;
+    top:100px;
 
-    left:16px;
-    right:16px;
-    width:auto;
-    max-width:none;
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
 
-    max-height:calc(100vh - 120px);
+    width:88vw;
+    max-width:360px;
 
-    padding:24px;
-    border-radius:30px;
+    max-height:65vh;
+
+    padding:20px;
+    border-radius:28px;
   }
 
   #content h1{
-    font-size:clamp(2rem,9vw,3rem);
+    font-size:2.4rem;
   }
 
   #content h2{
-    font-size:clamp(2rem,8vw,2.6rem);
+    font-size:2rem;
   }
 
   .subtitle{
     font-size:1rem;
   }
-}
 
-/* ---------- SMALL PHONE ---------- */
-
-@media (max-width:480px){
-
-  #content{
-    left:12px;
-    right:12px;
-    top:88px;
-    padding:20px;
-  }
-
-  .day-btn{
-    padding:10px 14px;
-    font-size:12px;
+  #content img{
+    max-height:190px;
   }
 }
