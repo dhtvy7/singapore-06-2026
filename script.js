@@ -39,7 +39,7 @@ fetch('data.json')
           type: 'Feature',
           geometry: {
             type: 'LineString',
-            coordinates: coordinates
+            coordinates
           }
         }
       });
@@ -63,7 +63,7 @@ fetch('data.json')
         item => item.id == id
       );
 
-      if(!p) return;
+      if (!p) return;
 
       content.innerHTML = `
         <h1>A Journey of Learning</h1>
@@ -89,8 +89,7 @@ fetch('data.json')
       `;
 
       content.style.opacity = 1;
-      content.style.transform =
-        'translateY(0px)';
+      content.scrollTop = 0;
 
       map.flyTo({
         center: [p.lon, p.lat],
@@ -117,80 +116,66 @@ fetch('data.json')
     showStory(1);
 
     /* ==========================
-       SWIPE DOWN TO HIDE CARD
+       DRAG DOWN TO FADE
+       WEB + MOBILE
        ========================== */
 
     let startY = 0;
-    let currentY = 0;
     let dragging = false;
 
-    content.addEventListener(
-      'touchstart',
-      e => {
+    content.addEventListener('pointerdown', e => {
+      startY = e.clientY;
+      dragging = true;
+    });
 
-        startY =
-          e.touches[0].clientY;
+    window.addEventListener('pointermove', e => {
 
-        currentY = startY;
-        dragging = true;
+      if (!dragging) return;
+
+      const delta =
+        e.clientY - startY;
+
+      if (delta <= 0) return;
+
+      const opacity =
+        Math.max(
+          0,
+          1 - delta / 220
+        );
+
+      content.style.opacity =
+        opacity;
+    });
+
+    window.addEventListener('pointerup', e => {
+
+      if (!dragging) return;
+
+      const delta =
+        e.clientY - startY;
+
+      if (delta > 120) {
+
+        content.style.opacity = 0;
+        content.style.pointerEvents = 'none';
+
+      } else {
+
+        content.style.opacity = 1;
       }
-    );
 
-    content.addEventListener(
-      'touchmove',
-      e => {
+      dragging = false;
+    });
 
-        if (!dragging) return;
+    document
+      .querySelectorAll('.day-btn')
+      .forEach(btn => {
 
-        currentY =
-          e.touches[0].clientY;
+        btn.addEventListener('click', () => {
+          content.style.pointerEvents =
+            'auto';
+        });
 
-        const delta =
-          Math.max(
-            0,
-            currentY - startY
-          );
-
-        content.style.transform =
-          `translateY(${delta}px)`;
-
-        content.style.opacity =
-          Math.max(
-            0,
-            1 - delta / 250
-          );
-      }
-    );
-
-    content.addEventListener(
-      'touchend',
-      () => {
-
-        if (!dragging) return;
-
-        const delta =
-          Math.max(
-            0,
-            currentY - startY
-          );
-
-        if (delta > 120) {
-
-          content.style.opacity = 0;
-
-          content.style.transform =
-            'translateY(300px)';
-
-        } else {
-
-          content.style.opacity = 1;
-
-          content.style.transform =
-            'translateY(0px)';
-        }
-
-        dragging = false;
-      }
-    );
+      });
 
   });
