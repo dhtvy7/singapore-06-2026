@@ -1,146 +1,140 @@
 const map = new maplibregl.Map({
-  container:'map',
-  style:'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-  center:[103.8,1.35],
-  zoom:5
+container: 'map',
+style:
+'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+center: [103.8, 1.35],
+zoom: 4
 });
 
 fetch('data.json')
-.then(res=>res.json())
-.then(data=>{
+.then(r => r.json())
+.then(data => {
 
-  const coordinates=[];
+const coordinates = [];
 
-  data.forEach(p=>{
-    coordinates.push([p.lon,p.lat]);
-  });
+data.forEach((p,index)=>{
 
-  map.on('load',()=>{
+coordinates.push([p.lon,p.lat]);
 
-    map.addSource('journey',{
-      type:'geojson',
-      data:{
-        type:'Feature',
-        geometry:{
-          type:'LineString',
-          coordinates:coordinates
-        }
-      }
-    });
+const el = document.createElement('div');
+el.className = 'marker';
 
-    map.addLayer({
-      id:'journey-glow',
-      type:'line',
-      source:'journey',
-      paint:{
-        'line-color':'#ffffff',
-        'line-width':7,
-        'line-opacity':0.05,
-        'line-blur':6
-      }
-    });
+new maplibregl.Marker(el)
+.setLngLat([p.lon,p.lat])
+.addTo(map);
 
-    map.addLayer({
-      id:'journey',
-      type:'line',
-      source:'journey',
-      layout:{
-        'line-cap':'round',
-        'line-join':'round'
-      },
-      paint:{
-        'line-color':'#bfbfbf',
-        'line-width':2.2,
-        'line-opacity':0.75
-      }
-    });
+const timeline =
+document.getElementById('timeline');
 
-  });
+const button =
+document.createElement('div');
 
-  const timeline=document.getElementById('timeline');
+button.className='timeline-item';
 
-  data.forEach((p,i)=>{
+button.innerHTML=`
+<h3>DAY ${index+1}</h3>
+`;
 
-    const marker=document.createElement('div');
-    marker.className='marker';
+timeline.appendChild(button);
 
-    new maplibregl.Marker({
-      element:marker
-    })
-    .setLngLat([p.lon,p.lat])
-    .addTo(map);
+function showStory(){
 
-    const card=document.createElement('div');
-    card.className='day-card';
-    card.innerHTML=`DAY ${i+1}`;
+document
+.querySelectorAll('.timeline-item')
+.forEach(i=>i.classList.remove('active'));
 
-    timeline.appendChild(card);
+button.classList.add('active');
 
-    function activate(){
+document.getElementById('content').innerHTML=`
 
-      document.querySelectorAll('.day-card')
-        .forEach(c=>c.classList.remove('active'));
+<h1>A Journey of Learning</h1>
 
-      card.classList.add('active');
+<div class="subtitle">
+Singapore Internship Experience 2026
+</div>
 
-      showPoint(p);
-    }
+<img src="${p.image}">
 
-    marker.addEventListener('click',activate);
-    card.addEventListener('click',activate);
-  });
+<h2>${p.title}</h2>
 
-  showPoint(data[0]);
+<p><strong>${p.day}</strong></p>
 
-  map.fitBounds(
-    [
-      [103.65,1.25],
-      [106.85,10.90]
-    ],
-    {
-      padding:120
-    }
-  );
+<h3>WHAT I SAW</h3>
+<p>${p.whatISaw}</p>
+
+<h3>KEY LESSON</h3>
+<p>${p.whatILearned}</p>
+
+<h3>FUTURE PRACTICE</h3>
+<p>${p.futurePractice}</p>
+
+`;
+
+map.flyTo({
+center:[p.lon,p.lat],
+zoom:10,
+speed:.8
+});
+}
+
+el.addEventListener(
+'click',
+showStory
+);
+
+button.addEventListener(
+'click',
+showStory
+);
+
 });
 
-function showPoint(p){
+map.on('load',()=>{
 
-  document.getElementById('content').innerHTML=`
-
-  <h1>A Journey of Learning</h1>
-
-  <div class="subtitle">
-    Singapore Internship Experience 2026
-  </div>
-
-  <img src="${p.image}">
-
-  <h2>${p.title}</h2>
-
-  <div class="subtitle">${p.day}</div>
-
-  <div class="section-title">
-    WHAT I SAW
-  </div>
-
-  <p>${p.whatISaw}</p>
-
-  <div class="section-title">
-    KEY LESSON
-  </div>
-
-  <p>${p.whatILearned}</p>
-
-  <div class="section-title">
-    FUTURE PRACTICE
-  </div>
-
-  <p>${p.futurePractice}</p>
-  `;
-
-  map.flyTo({
-    center:[p.lon,p.lat],
-    zoom:10,
-    speed:0.8
-  });
+map.addSource('journey',{
+type:'geojson',
+data:{
+type:'Feature',
+geometry:{
+type:'LineString',
+coordinates:coordinates
 }
+}
+});
+
+map.addLayer({
+id:'journey-glow',
+type:'line',
+source:'journey',
+layout:{
+'line-cap':'round',
+'line-join':'round'
+},
+paint:{
+'line-color':'rgba(255,255,255,.12)',
+'line-width':8,
+'line-blur':8
+}
+});
+
+map.addLayer({
+id:'journey',
+type:'line',
+source:'journey',
+layout:{
+'line-cap':'round',
+'line-join':'round'
+},
+paint:{
+'line-color':'rgba(255,255,255,.55)',
+'line-width':2
+}
+});
+
+document
+.querySelector('.timeline-item')
+?.click();
+
+});
+
+});
