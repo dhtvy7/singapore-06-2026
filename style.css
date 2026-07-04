@@ -224,4 +224,6 @@ body{
     border-radius:20px;
   }
 
+#content{
+  transition: opacity .15s linear;
 }
