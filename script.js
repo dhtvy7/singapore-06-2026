@@ -46,14 +46,18 @@ fetch('data.json')
         day.stops.forEach((stop, index) => {
 
           const el = document.createElement('div');
-          el.className = 'dot';
-          el.style.setProperty('--dot-color', day.color);
+          el.className = 'dot-wrap';
+
+          const inner = document.createElement('div');
+          inner.className = 'dot';
+          inner.style.setProperty('--dot-color', day.color);
+          el.appendChild(inner);
 
           const marker = new maplibregl.Marker({ element: el })
             .setLngLat([stop.lon, stop.lat])
             .addTo(map);
 
-          markers.push({ el, dayId: day.id, index });
+          markers.push({ el: inner, dayId: day.id, index });
         });
 
       });
