@@ -21,10 +21,10 @@ fetch('data.json')
       new maplibregl.Marker({
         element: el
       })
-        .setLngLat([p.lon, p.lat])
-        .addTo(map);
+      .setLngLat([p.lon, p.lat])
+      .addTo(map);
 
-      // Preload ảnh để chuyển Day mượt hơn
+      // Preload ảnh
       const img = new Image();
       img.src = p.image;
 
@@ -56,11 +56,11 @@ fetch('data.json')
 
     });
 
-    function showStory(id) {
+    function showStory(id){
 
       const p = data.find(item => item.id == id);
 
-      if (!p) return;
+      if(!p) return;
 
       document.getElementById('content').innerHTML = `
         <h1>A Journey of Learning</h1>
@@ -85,12 +85,22 @@ fetch('data.json')
         <p>${p.futurePractice}</p>
       `;
 
-      map.flyTo({
-        center: [p.lon, p.lat],
-        zoom: 7,
-        duration: 1600,
-        essential: true
+      // Zoom ra trước
+      map.easeTo({
+        zoom: 4,
+        duration: 500
       });
+
+      // Sau đó bay tới điểm mới
+      setTimeout(() => {
+        map.flyTo({
+          center: [p.lon, p.lat],
+          zoom: 7,
+          speed: 0.6,
+          curve: 1.8,
+          essential: true
+        });
+      }, 500);
 
     }
 
