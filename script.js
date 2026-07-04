@@ -85,11 +85,11 @@ fetch('data.json')
     `;
 
     map.flyTo({
-      center:[p.lon,p.lat],
-      zoom:8,
-      duration:2000
-    });
-  }
+  center: [p.lon, p.lat],
+  zoom: 7,
+  duration: 1600,
+  essential: true
+});
 
   document
     .querySelectorAll('.day-btn')
