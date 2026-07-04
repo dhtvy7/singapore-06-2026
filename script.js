@@ -96,9 +96,9 @@ fetch('data.json')
 
       map.flyTo({
         center: [p.lon, p.lat],
-        zoom: 15,
+        zoom: 14,
         duration: 1800,
-        speed: 0.9,
+        speed: 0.8,
         curve: 1.1,
         essential: true
       });
