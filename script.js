@@ -119,41 +119,83 @@ fetch('data.json')
 
     const stopBlocks = content.querySelectorAll('.stop-block');
 
+    let activeKey = null;
+    let flyTimer = null;
+    const intersecting = new Map();
+
+    function centerFly(dayId, index) {
+
+      const day = days.find(d => d.id === dayId);
+      const stop = day.stops[index];
+
+      map.flyTo({
+        center: [stop.lon, stop.lat],
+        zoom: 14.5,
+        duration: 900,
+        curve: 1.2,
+        essential: true
+      });
+
+    }
+
+    function setActive(dayId, index) {
+
+      const key = `${dayId}-${index}`;
+      if (key === activeKey) return;
+      activeKey = key;
+
+      markers.forEach(m => {
+        m.el.classList.toggle('active', m.dayId === dayId && m.index === index);
+      });
+
+      document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.classList.toggle('active', Number(btn.dataset.id) === dayId);
+      });
+
+      clearTimeout(flyTimer);
+      flyTimer = setTimeout(() => centerFly(dayId, index), 160);
+
+    }
+
     const observer = new IntersectionObserver((entries) => {
 
       entries.forEach(entry => {
 
-        if (!entry.isIntersecting) return;
+        const key = entry.target;
 
-        const dayId = Number(entry.target.dataset.day);
-        const index = Number(entry.target.dataset.index);
-
-        const day = days.find(d => d.id === dayId);
-        const stop = day.stops[index];
-
-        map.flyTo({
-          center: [stop.lon, stop.lat],
-          zoom: 14.5,
-          duration: 1400,
-          speed: 0.9,
-          curve: 1.1,
-          essential: true
-        });
-
-        markers.forEach(m => {
-          const active = m.dayId === dayId && m.index === index;
-          m.el.classList.toggle('active', active);
-        });
-
-        document.querySelectorAll('.day-btn').forEach(btn => {
-          btn.classList.toggle('active', Number(btn.dataset.id) === dayId);
-        });
+        if (entry.isIntersecting) {
+          intersecting.set(key, entry);
+        } else {
+          intersecting.delete(key);
+        }
 
       });
 
+      if (intersecting.size === 0) return;
+
+      const rootRect = content.getBoundingClientRect();
+      const centerY = rootRect.top + rootRect.height / 2;
+
+      let closest = null;
+      let closestDist = Infinity;
+
+      intersecting.forEach(entry => {
+        const r = entry.boundingClientRect;
+        const mid = r.top + r.height / 2;
+        const dist = Math.abs(mid - centerY);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = entry.target;
+        }
+      });
+
+      if (!closest) return;
+
+      setActive(Number(closest.dataset.day), Number(closest.dataset.index));
+
     }, {
       root: content,
-      rootMargin: '-45% 0px -45% 0px',
+      rootMargin: '-35% 0px -35% 0px',
       threshold: 0
     });
 
