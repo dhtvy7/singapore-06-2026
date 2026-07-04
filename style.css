@@ -186,49 +186,82 @@ body{
 
 @media (max-width:500px){
 
+  /* DAY BUTTONS */
   .day-buttons{
     top:20px;
     left:50%;
     transform:translateX(-50%);
-    width:50%;
+
+    width:90%;
+    display:flex;
+    flex-wrap:nowrap;       /* luôn nằm ngang */
     justify-content:center;
-    gap:10px;
+    gap:8px;
   }
 
   .day-btn{
-    padding:10px 12px;
-    font-size:10px;
-    letter-spacing:1px;
+    padding:10px 14px;
+    font-size:12px;         /* giữ nguyên size chữ */
+    letter-spacing:2px;
+    white-space:nowrap;
   }
 
+  /* STORY CARD */
   #content{
-    top:200px;
+    top:auto;
+    bottom:20px;            /* nằm phía dưới */
     right:12px;
     left:auto;
     transform:none;
 
-    width:150px;
-    max-width:calc(100vw - 32px);
+    width:160px;            /* box nhỏ */
+    max-width:160px;
 
-    max-height:30vh;
+    max-height:32vh;
+    overflow-y:auto;
 
-    padding:18px;
-    border-radius:24px;
+    padding:14px;
+    border-radius:20px;
   }
 
   #content h1{
-    font-size:1rem;
-  }
-
-  #content h2{
-    font-size:1rem;
+    font-size:0.95rem;
+    line-height:1.1;
+    margin-bottom:12px;
   }
 
   .subtitle{
-    font-size:0.5rem;
+    font-size:0.55rem;
+    margin-bottom:14px;
   }
 
   #content img{
-    max-height:150px;
+    width:100%;
+    max-height:80px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:14px;
+  }
+
+  #content h2{
+    font-size:0.9rem;
+    line-height:1.1;
+    margin-bottom:8px;
+  }
+
+  .day{
+    font-size:0.65rem;
+    margin-bottom:12px;
+  }
+
+  #content h3{
+    font-size:0.65rem;
+    letter-spacing:2px;
+    margin-top:16px;
+  }
+
+  #content p{
+    font-size:0.7rem;
+    line-height:1.45;
   }
 }
