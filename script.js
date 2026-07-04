@@ -1,140 +1,108 @@
 const map = new maplibregl.Map({
-container: 'map',
-style:
-'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-center: [103.8, 1.35],
-zoom: 4
+  container: 'map',
+
+  style:
+  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+
+  center: [103.8, 3],
+  zoom: 4
 });
 
 fetch('data.json')
-.then(r => r.json())
+.then(res => res.json())
 .then(data => {
 
-const coordinates = [];
+  const coordinates = [];
 
-data.forEach((p,index)=>{
+  data.forEach(p => {
 
-coordinates.push([p.lon,p.lat]);
+    coordinates.push([p.lon, p.lat]);
 
-const el = document.createElement('div');
-el.className = 'marker';
+    const el = document.createElement('div');
+    el.className = 'dot';
 
-new maplibregl.Marker(el)
-.setLngLat([p.lon,p.lat])
-.addTo(map);
+    new maplibregl.Marker({
+      element: el
+    })
+    .setLngLat([p.lon, p.lat])
+    .addTo(map);
 
-const timeline =
-document.getElementById('timeline');
+  });
 
-const button =
-document.createElement('div');
+  map.on('load', () => {
 
-button.className='timeline-item';
+    map.addSource('journey', {
+      type: 'geojson',
+      data: {
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: coordinates
+        }
+      }
+    });
 
-button.innerHTML=`
-<h3>DAY ${index+1}</h3>
-`;
+    map.addLayer({
+      id: 'journey',
+      type: 'line',
+      source: 'journey',
+      paint: {
+        'line-color': '#d9d9d9',
+        'line-width': 2,
+        'line-opacity': 0.8
+      }
+    });
 
-timeline.appendChild(button);
+  });
 
-function showStory(){
+  function showStory(id){
 
-document
-.querySelectorAll('.timeline-item')
-.forEach(i=>i.classList.remove('active'));
+    const p = data.find(
+      item => item.id == id
+    );
 
-button.classList.add('active');
+    if(!p) return;
 
-document.getElementById('content').innerHTML=`
+    document.getElementById('content').innerHTML = `
+      <h1>A Journey of Learning</h1>
 
-<h1>A Journey of Learning</h1>
+      <p class="subtitle">
+        Singapore Internship Experience 2026
+      </p>
 
-<div class="subtitle">
-Singapore Internship Experience 2026
-</div>
+      <img src="${p.image}">
 
-<img src="${p.image}">
+      <h2>${p.title}</h2>
 
-<h2>${p.title}</h2>
+      <p>${p.day}</p>
 
-<p><strong>${p.day}</strong></p>
+      <h3>WHAT I SAW</h3>
+      <p>${p.whatISaw}</p>
 
-<h3>WHAT I SAW</h3>
-<p>${p.whatISaw}</p>
+      <h3>KEY LESSON</h3>
+      <p>${p.whatILearned}</p>
 
-<h3>KEY LESSON</h3>
-<p>${p.whatILearned}</p>
+      <h3>FUTURE PRACTICE</h3>
+      <p>${p.futurePractice}</p>
+    `;
 
-<h3>FUTURE PRACTICE</h3>
-<p>${p.futurePractice}</p>
+    map.flyTo({
+      center: [p.lon, p.lat],
+      zoom: 10,
+      duration: 2000
+    });
+  }
 
-`;
+  document
+    .querySelectorAll('.day-btn')
+    .forEach(btn => {
 
-map.flyTo({
-center:[p.lon,p.lat],
-zoom:10,
-speed:.8
-});
-}
+      btn.addEventListener('click', () => {
+        showStory(btn.dataset.id);
+      });
 
-el.addEventListener(
-'click',
-showStory
-);
+    });
 
-button.addEventListener(
-'click',
-showStory
-);
-
-});
-
-map.on('load',()=>{
-
-map.addSource('journey',{
-type:'geojson',
-data:{
-type:'Feature',
-geometry:{
-type:'LineString',
-coordinates:coordinates
-}
-}
-});
-
-map.addLayer({
-id:'journey-glow',
-type:'line',
-source:'journey',
-layout:{
-'line-cap':'round',
-'line-join':'round'
-},
-paint:{
-'line-color':'rgba(255,255,255,.12)',
-'line-width':8,
-'line-blur':8
-}
-});
-
-map.addLayer({
-id:'journey',
-type:'line',
-source:'journey',
-layout:{
-'line-cap':'round',
-'line-join':'round'
-},
-paint:{
-'line-color':'rgba(255,255,255,.55)',
-'line-width':2
-}
-});
-
-document
-.querySelector('.timeline-item')
-?.click();
-
-});
+  showStory(1);
 
 });
