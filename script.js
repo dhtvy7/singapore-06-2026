@@ -87,7 +87,7 @@ fetch('data.json')
 
       map.flyTo({
         center: [p.lon, p.lat],
-        zoom: 9,          // Zoom gần hơn
+        zoom: 11,          // Zoom gần hơn
         duration: 1800,
         speed: 0.9,
         curve: 1.1,
