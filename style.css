@@ -213,6 +213,8 @@ body{
   object-fit:cover;
   border-radius:14px;
   margin-top:10px;
+  filter: contrast(1.35) brightness(0.96) saturate(1.05);
+  background:#fff;
 }
 
 /* ---------- DAY RECAP ---------- */
