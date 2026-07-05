@@ -4,7 +4,7 @@
       "id": 1,
       "label": "Day 1",
       "color": "#d5ecf7",
-      "insight": "hi",
+      "insight": "...",
       "learned": "...",
       "futurePractice": "...",
       "stops": [
@@ -133,9 +133,8 @@
           "icon": "🌳",
           "lat": 1.2816,
           "lon": 103.8636,
-          "caption": "Đi bộ tham quan công viên, chiêm ngưỡng Supertree Grove",
-          "image": "garden_by_the_bay.png"
-          "image": "malay_garden.png"
+          "caption": "Đi bộ tham quan công viên, chiêm ngưỡng Supertree Grove và Malay Garden (Heritage Gardens)",
+          "images": ["garden_by_the_bay.png", "malay_garden.png"]
         },
         {
           "title": "Sân bay Changi",
