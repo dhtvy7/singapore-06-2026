@@ -124,6 +124,7 @@ fetch('data.json?v=' + Date.now())
             <div class="stop-body">
               <h3 class="stop-title">${stop.title}</h3>
               ${stop.caption ? `<p class="stop-caption">${stop.caption}</p>` : ''}
+              ${stop.images ? stop.images.map(img => `<img src="${img}">`).join('') : ''}
               ${stop.image ? `<img src="${stop.image}">` : ''}
             </div>
           </div>
