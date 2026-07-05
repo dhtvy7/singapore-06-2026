@@ -135,14 +135,6 @@
           "lon": 103.8636,
           "caption": "Đi bộ tham quan công viên, chiêm ngưỡng Supertree Grove",
           "image": "garden_by_the_bay.png"
-        },
-        {
-          "title": "Malay Garden (Heritage Gardens)",
-          "type": "culture",
-          "icon": "🌺",
-          "lat": 1.2814,
-          "lon": 103.8641,
-          "caption": "Một trong bốn khu vườn di sản tại Gardens by the Bay, Singapore",
           "image": "malay_garden.png"
         },
         {
