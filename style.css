@@ -275,7 +275,7 @@ body{
     white-space:nowrap;
   }
 
-  content{
+  #content{
   top:auto;
   bottom:20px;
   right:12px;
