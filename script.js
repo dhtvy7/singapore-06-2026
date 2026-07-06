@@ -377,20 +377,17 @@ setTimeout(() => {
   }
 });
 
-    document.getElementById('ending-screen')
+document.getElementById('ending-screen')
   .addEventListener('click', () => {
+
+    content.scrollTop =
+      content.scrollHeight -
+      content.clientHeight -
+      500;
 
     document.body.classList.remove(
       'ending-active'
     );
-
-    content.scrollTo({
-      top:
-        content.scrollHeight -
-        content.clientHeight -
-        300,
-      behavior:'smooth'
-    });
 
   });
     
