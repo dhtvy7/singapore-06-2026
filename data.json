@@ -9,7 +9,7 @@
       "futurePractice": "...",
       "stops": [
         {
-          "title": "Tân Sơn Nhất",
+          "title": "Tan Son Nhat Airport",
           "type": "travel",
           "lat": 10.8188,
           "lon": 106.6520,
@@ -17,7 +17,7 @@
           "image": null
         },
         {
-          "title": "Sân bay Changi",
+          "title": "Changi Airport",
           "type": "travel",
           "lat": 1.3644,
           "lon": 103.9915,
@@ -29,7 +29,7 @@
           "type": "food",
           "lat": 1.2996,
           "lon": 103.8500,
-          "caption": "Ăn tối gần khách sạn",
+          "caption": "",
           "image": null
         }
       ]
@@ -47,7 +47,7 @@
           "type": "work",
           "lat": 1.3346,
           "lon": 103.7430,
-          "caption": "Buổi làm việc tại trụ sở CPG",
+          "caption": "",
           "image": null
         },
         {
@@ -56,7 +56,7 @@
           "icon": "🏢",
           "lat": 1.3436,
           "lon": 103.8496,
-          "caption": "Tham quan học viện",
+          "caption": "",
           "image": null
         },
         {
@@ -65,7 +65,7 @@
           "icon": "🏢",
           "lat": 1.3346,
           "lon": 103.7430,
-          "caption": "Quay lại CPG",
+          "caption": "",
           "image": null
         },
         {
@@ -74,7 +74,7 @@
           "icon": "🎓",
           "lat": 1.2967,
           "lon": 103.7768,
-          "caption": "Tham quan Khoa Thiết kế & Môi trường, NUS",
+          "caption": "",
           "image": "https://dhtvy7.github.io/singapore-06-2026/images/NUS.jpg"
         },
         {
@@ -83,7 +83,7 @@
           "icon": "📖",
           "lat": 1.3039,
           "lon": 103.8318,
-          "caption": "Mua sách ở Orchard",
+          "caption": "",
           "image": null
         },
         {
@@ -92,7 +92,7 @@
           "icon": "🌆",
           "lat": 1.2868,
           "lon": 103.8545,
-          "caption": "Đi bộ tham quan khu trung tâm",
+          "caption": "",
           "image": null
         }
       ]
@@ -111,7 +111,7 @@
           "icon": "🏙️",
           "lat": 1.2799,
           "lon": 103.8437,
-          "caption": "Tìm hiểu quy hoạch đô thị Singapore",
+          "caption": "",
           "image": null
         },
         {
@@ -120,7 +120,7 @@
           "icon": "🎨",
           "lat": 1.2862,
           "lon": 103.8592,
-          "caption": "Marina Bay Sands",
+          "caption": "",
           "image": null
         },
         {
@@ -129,16 +129,16 @@
           "icon": "🌳",
           "lat": 1.2816,
           "lon": 103.8636,
-          "caption": "Đi bộ tham quan công viên, chiêm ngưỡng Supertree Grove và Malay Garden (Heritage Gardens)",
+          "caption": "",
           "images": ["garden_by_the_bay.png", "malay_garden.png"]
         },
         {
-          "title": "Sân bay Changi",
+          "title": "Changi Airport",
           "type": "travel",
           "icon": "✈️",
           "lat": 1.3644,
           "lon": 103.9915,
-          "caption": "Bay về Việt Nam",
+          "caption": "",
           "image": null
         }
       ]
