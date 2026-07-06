@@ -42,7 +42,7 @@ fetch('data.json?v=' + Date.now())
     'line-color': day.color,
     'line-width': 2,
     'line-opacity': 0.8,
-    'line-dasharray': [1, 1.6]
+    'line-dasharray': [4, 2]
   }
 });
         
