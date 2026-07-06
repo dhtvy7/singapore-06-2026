@@ -100,7 +100,7 @@ fetch('data.json?v=' + Date.now())
 
     let html = `
       <h1>A Journey of Learning</h1>
-      <div class="subtitle">Singapore Internship Experience 2026</div>
+      <div class="subtitle">CPG Internship Experience 2026</div>
     `;
 
     days.forEach(day => {
@@ -134,9 +134,9 @@ fetch('data.json?v=' + Date.now())
           </div>
 
           <div class="day-recap">
-            <h3>KEY LESSON</h3>
+            <h3>WHAT I </h3>
             <p>${day.learned}</p>
-            <h3>FUTURE PRACTICE</h3>
+            <h3>WHAT I TAKE AWAY</h3>
             <p>${day.futurePractice}</p>
           </div>
 
