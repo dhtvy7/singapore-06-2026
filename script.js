@@ -41,8 +41,8 @@ fetch('data.json?v=' + Date.now())
   paint: {
     'line-color': day.color,
     'line-width': 2,
-    'line-opacity': 0.8,
-    'line-dasharray': [4, 2]
+    'line-opacity': 0.7,
+    'line-dasharray': [2, 2]
   }
 });
         
