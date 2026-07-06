@@ -367,7 +367,6 @@ body.ending-active #ending-screen{
 body.ending-active #content{
   opacity:0;
   transform:translateX(100px);
-  pointer-events:none;
   transition:1s ease;
 }
 
