@@ -275,22 +275,22 @@ body{
     white-space:nowrap;
   }
 
-  #content{
-    top:auto;
-    bottom:20px;
-    right:12px;
-    left:12px;
+  content{
+  top:auto;
+  bottom:20px;
+  right:12px;
+  left:12px;
 
-    width:auto;
-    max-width:none;
+  width:auto;
+  max-width:none;
 
-    max-height:40vh;
+  max-height:40vh;
 
-    padding:16px;
-    border-radius:20px;
-  }
+  padding:16px;
+  border-radius:20px;
+}
 
-  }
+} /* <-- THÊM DẤU NÀY */
 
   /* ===== ENDING CINEMATIC ===== */
 
@@ -392,6 +392,4 @@ body.ending-active #map{
   .ending-old{
     font-size:1.3rem;
   }
-}
-
 }
