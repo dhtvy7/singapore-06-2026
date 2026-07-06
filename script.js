@@ -356,17 +356,12 @@ setTimeout(() => {
   const fade = Math.min(content.scrollTop, 100);
   content.style.setProperty('--fade-top', `${fade}px`);
 
-  const trigger =
-    document.getElementById('ending-trigger');
-
-  if (!trigger) return;
-
-  if (closingEnding) return;
-
   const threshold =
     content.scrollHeight -
     content.clientHeight -
     100;
+
+  if (closingEnding) return;
 
   if (content.scrollTop >= threshold) {
     document.body.classList.add('ending-active');
@@ -375,24 +370,30 @@ setTimeout(() => {
   }
 });
 
+/* ===== CLICK TO EXIT ENDING ===== */
+
 document.getElementById('ending-screen')
   .addEventListener('click', () => {
 
     closingEnding = true;
 
-    document.body.classList.remove(
-      'ending-active'
-    );
-
+    // đẩy panel lên trước khi tắt overlay
     content.scrollTop =
       content.scrollHeight -
       content.clientHeight -
-      400;
+      600;
+
+    // đợi 1 frame rồi mới remove class
+    requestAnimationFrame(() => {
+      document.body.classList.remove(
+        'ending-active'
+      );
+    });
 
     setTimeout(() => {
       closingEnding = false;
-    }, 300);
+    }, 400);
 
   });
-    
+
 });
