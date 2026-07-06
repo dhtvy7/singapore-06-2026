@@ -186,7 +186,7 @@
           "lat": 1.2816,
           "lon": 103.8636,
           "caption": "",
-          "images": ["garden_by_the_bay.png"]
+          "image": ["garden_by_the_bay.png"]
         }
       ]
     }
