@@ -377,4 +377,21 @@ setTimeout(() => {
   }
 });
 
+    document.getElementById('ending-screen')
+  .addEventListener('click', () => {
+
+    document.body.classList.remove(
+      'ending-active'
+    );
+
+    content.scrollTo({
+      top:
+        content.scrollHeight -
+        content.clientHeight -
+        300,
+      behavior:'smooth'
+    });
+
+  });
+    
 });
