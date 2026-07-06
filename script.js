@@ -145,7 +145,11 @@ fetch('data.json?v=' + Date.now())
 
     });
 
-    content.innerHTML = html;
+    html += `
+  <section id="ending-trigger"></section>
+`;
+
+content.innerHTML = html;
 
     /* ==========================
        SCROLLYTELLING OBSERVER
@@ -349,8 +353,26 @@ setTimeout(() => {
        ========================== */
 
     content.addEventListener('scroll', () => {
-      const fade = Math.min(content.scrollTop, 100);
-      content.style.setProperty('--fade-top', `${fade}px`);
-    });
+  const fade = Math.min(content.scrollTop, 100);
+  content.style.setProperty('--fade-top', `${fade}px`);
 
-  });
+  const trigger =
+    document.getElementById('ending-trigger');
+
+  if (!trigger) return;
+
+  const threshold =
+    content.scrollHeight -
+    content.clientHeight -
+    150;
+
+  if (content.scrollTop >= threshold) {
+    document.body.classList.add(
+      'ending-active'
+    );
+  } else {
+    document.body.classList.remove(
+      'ending-active'
+    );
+  }
+});
